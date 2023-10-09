@@ -1,8 +1,9 @@
-#ifndef _structs_H
-#define _structs_H 1
+#ifndef _data_structs_H
+#define _data_structs_H 1
 
 typedef struct TAG_ELEMENT{
     double key;
+    int position; 
     // other fields as you see fit
 }ELEMENT;
 typedef struct TAG_HEAP{
