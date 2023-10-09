@@ -2,11 +2,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include "util.h"
+#include "heap.h"
 
 
 int main(int argc, char **argv){
     FILE *fp;
- 
+    HEAP *MinHeap; 
+
+    int position; 
     double key;
     int returnV;
     char Word[100];
@@ -16,7 +19,7 @@ int main(int argc, char **argv){
         exit(0);
     }
 
-    fp    = NULL;
+    fp = NULL;
 
     fp = fopen(argv[1], "r");
     if (!fp){
