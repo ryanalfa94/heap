@@ -16,6 +16,7 @@ HEAP* DecreaseKey(HEAP* heap, int position, double newKey, int flag);
 HEAP* Insert(HEAP* heap, double key, int flag);
 void Heapify(HEAP* heap, int i);
 HEAP* BuildHeap(HEAP* heap);
+void printHeapifyCount();
 
 
 

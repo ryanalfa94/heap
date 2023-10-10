@@ -13,6 +13,10 @@ ASU ID 1221954331
 // helpful functions. 
 
 int heapifyCount =0; 
+
+void printHeapifyCount() {
+    printf("Number of Heapify calls: %d\n", heapifyCount);
+}
 bool IsHeapFull(HEAP* heap) {
     return heap->size >= heap->capacity;
 }
@@ -77,17 +81,16 @@ void Heapify(HEAP* heap, int i) {
     }
 
     if (smallest != i) {
-        //swaping the elements
+        // Swapping the elements
         ELEMENT* temp = heap->H[i];
         heap->H[i] = heap->H[smallest];
         heap->H[smallest] = temp;
 
-        // Recursively call Heapify on the affected subtree
-        Heapify(heap, smallest);
-
         // Increment the count for each Heapify call
         heapifyCount++;
-        
+
+        // Recursively call Heapify on the affected subtree
+        Heapify(heap, smallest);
     }
 }
 

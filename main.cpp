@@ -119,7 +119,7 @@ int main(int argc, char **argv){
                     if (flag == 1 || flag == 3){
                         printf("Input array is NOT a MinHeap\nCall BuildHeap\n");
                         minHeap = BuildHeap(minHeap);
-                        printf("Number of Heapify calls triggered by BuildHeap: <count>");
+                        printHeapifyCount();
                 }
                 }
             // Close the input file
