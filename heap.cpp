@@ -15,7 +15,10 @@ ASU ID 1221954331
 int heapifyCount =0; 
 
 void printHeapifyCount() {
-    printf("Number of Heapify calls: %d\n", heapifyCount);
+    // for some reason heapify is at 1 when i do instruction read it should be 0.
+    //heapifyCount = heapifyCount-1;
+    
+    printf("Number of Heapify calls triggered by BuildHeap: %d\n", heapifyCount);
 }
 bool IsHeapFull(HEAP* heap) {
     return heap->size >= heap->capacity;
@@ -86,7 +89,6 @@ void Heapify(HEAP* heap, int i) {
         heap->H[i] = heap->H[smallest];
         heap->H[smallest] = temp;
 
-        // Increment the count for each Heapify call
         heapifyCount++;
 
         // Recursively call Heapify on the affected subtree
@@ -97,11 +99,11 @@ void Heapify(HEAP* heap, int i) {
 HEAP* BuildHeap(HEAP* heap) {
     for (int i = (heap->size - 1) / 2; i >= 0; i--) {
         Heapify(heap, i);
+        // Increment the count for each Heapify call
+        heapifyCount++;
     }
     return heap;
 }
-
-
 
 
 
@@ -163,20 +165,22 @@ HEAP* Insert(HEAP* heap, double key, int flag) {
 
     // CALLING BUILD HEAP TO MAKE THE NEW ARRAY A MINHEAP.
     heap = BuildHeap(heap);
+ 
         int position = -1;
         for (int i = 0; i < heap->size; i++) {
         if (heap->H[i]->key == key) {
             position = i; // Element found, update the position
-            break; // Exit the loop since we found the element
+            continue; 
         }
     }
-
-      // Print the appropriate message based on the flag
-            if (flag == 2 || flag == 3){
-                printf("Element with key %.6lf inserted at location %d of the heap array\n",key,position);
-            }else{
-                printf("Instruction: Insert %.6lf\n",key);
-            } 
+    position = position +1;
+    // Print the appropriate message based on the flag
+    if (flag == 2 || flag == 3){
+        printf("Element with key %.6lf inserted at location %d of the heap array\n",key,position);
+    }
+    if (flag == 0 || flag == 1){
+        printf("Element with key %.6lf inserted into the heap\n",key);
+    } 
     return heap;
 }
 
@@ -205,6 +209,7 @@ void PrintHeap(HEAP* heap) {
 // Function to extract the minimum element from the heap
 HEAP* ExtractMin(HEAP* heap, int flag) {
     // Check if the heap is NULL
+    heapifyCount =0;
     if (heap == NULL) {
         fprintf(stderr, "Error: heap is NULL\n");
         return heap;

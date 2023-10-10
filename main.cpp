@@ -121,6 +121,9 @@ int main(int argc, char **argv){
                         minHeap = BuildHeap(minHeap);
                         printHeapifyCount();
                 }
+                 if (flag == 0 || flag == 2){
+                        minHeap = BuildHeap(minHeap);
+                }
                 }
             // Close the input file
             fclose(inputFile);
@@ -160,9 +163,6 @@ int main(int argc, char **argv){
 
             // Close the output file
             fclose(file);
-
-
-
             continue;
         }
 
@@ -174,6 +174,7 @@ int main(int argc, char **argv){
 
 
         if (strcmp(Word, "Insert")==0){
+            printf("Instruction: Insert %.6lf\n",key);
             Insert(minHeap,key,flag);       
             continue;
         }
