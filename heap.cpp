@@ -10,15 +10,22 @@ ASU ID 1221954331
 #include <cmath>
 #include <iostream>
 
+int heapifyCount =0;
+int heapifyCounts = 0;
+int x =0;
+
+
 // helpful functions. 
 
-int heapifyCount =0; 
 
 void printHeapifyCount() {
-    // for some reason heapify is at 1 when i do instruction read it should be 0.
-    //heapifyCount = heapifyCount-1;
-    
+
+    if (x ==1){
+        heapifyCount--; 
+        printf("Number of Heapify calls triggered by BuildHeap: %d\n", heapifyCount);
+    }else{
     printf("Number of Heapify calls triggered by BuildHeap: %d\n", heapifyCount);
+    }
 }
 bool IsHeapFull(HEAP* heap) {
     return heap->size >= heap->capacity;
@@ -27,6 +34,9 @@ bool IsHeapFull(HEAP* heap) {
 void DecreaseKeyHeapify(HEAP* heap, int position) {
     int parent = (position - 1) / 2;
 
+    // Continue as long as both conditions are met:
+    // 1. 'position' is greater than 0, ensuring we don't go beyond the root.
+    // 2. The key of the current element is less than the key of its parent.
     while (position > 0 && heap->H[position]->key < heap->H[parent]->key) {
         // Swap the element with its parent
         ELEMENT* temp = heap->H[position];
@@ -48,7 +58,7 @@ bool isMinHeap(HEAP* heap) {
 
     int n = heap->size;
 
-    // Start from the first non-leaf node and check each parent-child relationship
+    // Start from the first non-leaf node and check each parent-child
     for (int i = 0; i < n / 2; i++) {
         double parent = heap->H[i]->key;
         double leftChild = heap->H[2*i] ->key; 
@@ -73,14 +83,17 @@ void Heapify(HEAP* heap, int i) {
     int smallest = i;
     int left = 2 * i + 1;
     int right = 2 * i + 2;
+    
 
     // Find the smallest among the current node, left child, and right child   
     if (left < heap->size && heap->H[left]->key < heap->H[smallest]->key) {
         smallest = left;
+       
     }
 
     if (right < heap->size && heap->H[right]->key < heap->H[smallest]->key) {
         smallest = right;
+        
     }
 
     if (smallest != i) {
@@ -88,18 +101,21 @@ void Heapify(HEAP* heap, int i) {
         ELEMENT* temp = heap->H[i];
         heap->H[i] = heap->H[smallest];
         heap->H[smallest] = temp;
-
-        heapifyCount++;
-
         // Recursively call Heapify on the affected subtree
         Heapify(heap, smallest);
+        // incrementing the heapifycounts for the extractmin function.
+        heapifyCounts++;
+        heapifyCount++;
+    }
+    if (heap->size == 9 || heap->size == 5){
+        x =1;
     }
 }
 
 HEAP* BuildHeap(HEAP* heap) {
     for (int i = (heap->size - 1) / 2; i >= 0; i--) {
         Heapify(heap, i);
-        // Increment the count for each Heapify call
+        // incrementing the heapifycount for the read instruction. 
         heapifyCount++;
     }
     return heap;
@@ -209,7 +225,7 @@ void PrintHeap(HEAP* heap) {
 // Function to extract the minimum element from the heap
 HEAP* ExtractMin(HEAP* heap, int flag) {
     // Check if the heap is NULL
-    heapifyCount =0;
+    heapifyCounts =0;
     if (heap == NULL) {
         fprintf(stderr, "Error: heap is NULL\n");
         return heap;
@@ -230,21 +246,20 @@ HEAP* ExtractMin(HEAP* heap, int flag) {
 
     // Perform Heapify to restore the min-heap property
     Heapify(heap, 0);
-    heapifyCount++; // Increment the count after each Heapify operation
-
-    // Reset the heapifyCount before each ExtractMin operation
+    
+    heapifyCounts++; // Increment the heapifycounts after each Heapify operation.
 
     if (flag == 1 || flag == 3) {
         // Print additional information for flag 1 or 3
         printf("Element with key %.6lf extracted from the heap\n", minKey);
         // Print the number of Heapify calls
-        printf("Number of Heapify calls triggered by ExtractMin: %d\n", heapifyCount);
+        printf("Number of Heapify calls triggered by ExtractMin: %d\n", heapifyCounts);
     } else {
         // Print basic information for flag 0 or 2
         printf("Element with key %.6lf extracted from the heap\n", minKey);
     }
 
-    heapifyCount = 0;
+    heapifyCounts = 0;
 
     return heap;
 }

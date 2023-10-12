@@ -55,24 +55,8 @@ int nextInstruction(char *Word, double *Key)
 
     else if (strcmp(Word, "ExtractMin")==0)    return 1;
     else if (strcmp(Word, "DecreaseKey")==0)    return 1;
-
-
-        /*
-        decreasKey gives u a position and a new key. we scan both of em
-        pass em through and check if both are numbers if so return 1 otherwise return 0. 
-        
-        returnV = fscanf(stdin, "%lf", Key);
-
-         if (returnV == 1){
-            return 1;
-        }else{
-            return 0;
-        }
-*/
     
     else {
-
-        printf(" not a correct instruction !!!!!!!\n");
     }
 
    

@@ -15,12 +15,9 @@ int main(int argc, char **argv){
     
     FILE *fp;
     HEAP *minHeap; 
-    //int position; 
     double key;
     int returnV;
     char Word[100];
-    //int capacity;
-    //ELEMENT *pELEMENT;
     
 
     if (argc < 4){
@@ -42,8 +39,7 @@ int main(int argc, char **argv){
         fprintf(stderr, "Error: cannot open file %s\n", argv[1]);
         exit(0);
     }
-    // File opened for reading...
-// Work on the logic inside each if statement. 
+    // File opened for reading... 
   while (1){
         returnV = nextInstruction(Word, &key);
 
@@ -61,8 +57,6 @@ int main(int argc, char **argv){
 
         if (strcmp(Word, "Read")==0){ 
             
-
-
             FILE* inputFile = fopen(argv[1], "r");
             if (!inputFile) {
                 printf("cannot open input file");
@@ -70,7 +64,6 @@ int main(int argc, char **argv){
             }
 
             printf("Instruction: Read\n");
-            
 
             // Check if the heap is NULL
             if (minHeap == nullptr) {
@@ -107,10 +100,7 @@ int main(int argc, char **argv){
                 int pos = minHeap->size;
                 minHeap->H[pos] = element;
                 minHeap->size++;
-
-                // not sure about this ask professor.
             }
-
 
              if (isMinHeap(minHeap)){
                     fclose(inputFile);
